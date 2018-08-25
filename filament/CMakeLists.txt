@@ -344,6 +344,12 @@ if (MSVC OR CLANG_CL)
     set(OPTIMIZATION_FLAGS
         /fp:fast
     )
+elseif(WEBGL)
+    set(OPTIMIZATION_FLAGS
+        -ffast-math
+        -ffp-contract=fast
+        -fvisibility=hidden
+        -fvisibility-inlines-hidden)
 else()
     set(OPTIMIZATION_FLAGS
         -ffast-math

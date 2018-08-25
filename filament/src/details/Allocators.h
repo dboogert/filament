@@ -22,6 +22,8 @@
 namespace filament {
 namespace details {
 
+#ifndef __EMSCRIPTEN__
+
 // per render pass allocations
 // Froxelization needs about 1 MiB. Command buffer needs about 1 MiB.
 static constexpr size_t CONFIG_PER_RENDER_PASS_ARENA_SIZE    = 2 * 1024 * 1024;
@@ -31,6 +33,15 @@ static constexpr size_t CONFIG_PER_FRAME_COMMANDS_SIZE = 1 * 1024 * 1024;
 
 // size of a command-stream buffer (comes from mmap -- not the per-engine arena)
 static constexpr size_t CONFIG_MIN_COMMAND_BUFFERS_SIZE = 1 * 1024 * 1024;
+
+#else
+
+static constexpr size_t CONFIG_PER_RENDER_PASS_ARENA_SIZE = 128 * 1024;
+static constexpr size_t CONFIG_PER_FRAME_COMMANDS_SIZE = 64 * 1024;
+static constexpr size_t CONFIG_MIN_COMMAND_BUFFERS_SIZE = 64 * 1024;
+
+#endif
+
 static constexpr size_t CONFIG_COMMAND_BUFFERS_SIZE     = 3 * CONFIG_MIN_COMMAND_BUFFERS_SIZE;
 
 #ifndef NDEBUG
